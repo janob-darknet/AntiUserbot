@@ -1,0 +1,19 @@
+
+from gtts import gTTS
+from telethon import TelegramClient, events, sync
+
+
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.tts'))
+async def runj(event):
+    await event.delete()
+    language = event.message.raw_text.split()
+    getmessage = await event.get_reply_message()
+    messagelocation = event.to_id
+    filename = "janob_darknet.ogg"
+    try:
+        createtts = gTTS(text=f"{getmessage.message}", lang=f"{language[1]}", slow=False)
+        createtts.save(filename)
+        await client.send_file(messagelocation, filename)
+        remove(filename)
+    except:
+        pass
